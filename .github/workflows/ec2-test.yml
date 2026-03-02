@@ -20,6 +20,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      # Step1: どのアカウント/IDで叩いているか確認
+      - name: Who am I (account check)
+        run: |
+          echo "=== aws --version ==="
+          aws --version
+          echo "=== sts get-caller-identity ==="
+          aws sts get-caller-identity
+
+      # Step2: AMIの情報（所有者など）を確認
+      - name: Describe AMI (owner/public/encrypted)
+        run: |
+          echo "=== describe-images ==="
+          aws ec2 describe-images \
+            --image-ids ami-06cef29ab9842d0ea \
+            --output json
+
       - name: Launch EC2 from AMI
         run: |
           aws ec2 run-instances \
