@@ -25,5 +25,4 @@ jobs:
           aws ec2 run-instances \
             --image-id ami-06cef29ab9842d0ea \
             --instance-type t2.micro \
-            --min-count 1 \
-            --max-count 1
+            --count 1
